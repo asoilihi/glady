@@ -1,11 +1,11 @@
 ## Clone the project
 
 - git clone this project and checkout:
-* I used java 17, an embedded database H2 and a beautiful swagger to try the two Service Rest
+* I used java 17, an embedded database H2 and a beautiful swagger to try the two Services Rest
 * In this project I use MapStruct To convert entities objects to dto vice versa.
 * You have to compile the project after clone it to generate the GladyMapperImpl
 	in this path: target/generated-sources/annotations/com/backend/as/glady/mappers/GladyMapperImpl.java
-   PS: you can run ('mvn clean compile package' for example to run all tests)
+   PS: you can run ('mvn clean compile' to compile the project and generate the mapper or 'mvn clean compile install' to run all tests)
 
 ## Run the 
 
