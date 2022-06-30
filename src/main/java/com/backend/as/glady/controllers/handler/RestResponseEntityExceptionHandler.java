@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 /**
  * @author asoilihi
  *
@@ -24,7 +26,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	 * @param request
 	 * @return
 	 */
-	@ExceptionHandler(value = { IllegalArgumentException.class})
+	@ExceptionHandler(value = { IllegalArgumentException.class, InvalidFormatException.class})
 	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
 		ResponseError bodyOfResponse = ResponseError.builder().status(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).build();
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -62,6 +64,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		ResponseError bodyOfResponse = ResponseError.builder().status(HttpStatus.NOT_ACCEPTABLE.value()).message(ex.getMessage()).build();
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
 	}
+	
 	
 	/**
 	 * @param ex
