@@ -1,7 +1,7 @@
 ## Required on machine
  - JDK 17 
  - apache maven
- - IDE (
+ - IDE (optional)
 
 ## Clone the project and compile
 
