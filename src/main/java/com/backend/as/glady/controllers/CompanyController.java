@@ -40,7 +40,7 @@ public class CompanyController {
 			@PathVariable("idUser") Long idUser) {
 
 		return new ResponseEntity<>(companyService.distributeGiftOrMealDepositToUser(idCompany, idUser, walletUserDto),
-				HttpStatus.OK);
+				HttpStatus.CREATED);
 
 	}
 
