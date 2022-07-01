@@ -1,6 +1,5 @@
 package com.backend.as.glady.data.entities;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,13 +22,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class User {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5706053510700869507L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -42,5 +36,6 @@ public class User implements Serializable {
 
 	@OneToMany(mappedBy = "user")
 	private List<WalletUser> walletUser;
+
 
 }

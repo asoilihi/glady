@@ -1,5 +1,6 @@
 package com.backend.as.glady.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,6 +23,7 @@ import com.backend.as.glady.data.entities.Company;
 import com.backend.as.glady.data.entities.User;
 import com.backend.as.glady.data.entities.WalletUser;
 import com.backend.as.glady.data.repositories.UserRepository;
+import com.backend.as.glady.data.repositories.WalletRepository;
 import com.backend.as.glady.mappers.GladyMapper;
 import com.backend.as.glady.model.UserDto;
 import com.backend.as.glady.model.WalletUserDto;
@@ -41,6 +43,9 @@ class CompanyServiceTest {
 	private GladyMapper gladyMapper;
 
 	private WalletUserDto walletUserDto;
+
+	@Mock
+	private WalletRepository walletUserRepository;
 
 	@BeforeEach
 	void setUp() {
@@ -91,8 +96,8 @@ class CompanyServiceTest {
 				() -> companyService.distributeGiftOrMealDepositToUser(1L, 65656L, walletUserDto));
 
 		assertNotNull(unsupportedOperationException.getMessage());
-		assertEquals(unsupportedOperationException.getMessage(),
-				"The mount request" + walletUserDto.getBalance() + " is greater than the total amount of company");
+		assertThat(unsupportedOperationException.getMessage()).isEqualTo(
+				"The amount requested: " + walletUserDto.getBalance() + " is greater than the total amount of company");
 	}
 
 	@Test
@@ -113,7 +118,7 @@ class CompanyServiceTest {
 		when(gladyMapper.walletUserDtoToWalletUser(walletUserDto)).thenReturn(walletUser1);
 
 		when(userRepository.findById(65656L)).thenReturn(user);
-		when(userRepository.save(userObj)).thenReturn(userObj);
+		when(walletUserRepository.save(walletUser1)).thenReturn(walletUser1);
 
 		UserDto userDtoSaved = companyService.distributeGiftOrMealDepositToUser(1L, 65656L, walletUserDto);
 
