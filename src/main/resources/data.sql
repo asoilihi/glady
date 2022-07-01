@@ -14,6 +14,9 @@ INSERT INTO users (id, name, id_company) Values (6, 'Jessica', 3);
 INSERT INTO users (id, name, id_company) Values (7, 'Coralie', 3);
 INSERT INTO users (id, name, id_company) Values (8, 'Quentin', 2);
 
+drop table walletuser;
+create table walletuser (id bigint auto_increment, id_user bigint NOT NULL, balance int NOT NULL, category varchar(250) NOT NULL, created_date date NOT NULL);
+
 INSERT INTO walletuser (id, id_user, balance, category, created_date) Values (1, 1, 100, 'MEAL', '2022-06-28');
 INSERT INTO walletuser (id, id_user, balance, category, created_date) Values (2, 1, 100, 'GIFT', '2022-06-29');
 INSERT INTO walletuser (id, id_user, balance, category, created_date) Values (3, 2, 100, 'GIFT', '2022-06-15');
