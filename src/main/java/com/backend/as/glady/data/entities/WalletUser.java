@@ -1,6 +1,5 @@
 package com.backend.as.glady.data.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -23,12 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WalletUser implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8505944918272390412L;
+public class WalletUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,5 @@
 package com.backend.as.glady.data.entities;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,12 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1685075128201140237L;
+public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +37,7 @@ public class Company implements Serializable {
 	private Long balance;
 
 	@OneToMany(mappedBy = "company")
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private List<User> users;
 
 }

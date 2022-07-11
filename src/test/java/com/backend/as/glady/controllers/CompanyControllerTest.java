@@ -68,7 +68,7 @@ class CompanyControllerTest {
 		// then
 
 		mockMvc.perform(post("/api/company/1/user/1").contentType(MediaType.APPLICATION_JSON).content(json)
-				.characterEncoding("utf-8")).andExpect(status().isOk())
+				.characterEncoding("utf-8")).andExpect(status().isCreated())
 				.andExpect(jsonPath("id", Matchers.is(userDto.getId())))
 				.andExpect(jsonPath("company.name", Matchers.is(userDto.getCompany().getName())))
 				.andExpect(jsonPath("company.balance", Matchers.is(userDto.getCompany().getBalance().intValue())));

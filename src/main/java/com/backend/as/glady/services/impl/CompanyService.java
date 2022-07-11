@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.backend.as.glady.data.entities.User;
 import com.backend.as.glady.data.entities.WalletUser;
 import com.backend.as.glady.data.repositories.UserRepository;
+import com.backend.as.glady.data.repositories.WalletRepository;
 import com.backend.as.glady.mappers.GladyMapper;
 import com.backend.as.glady.model.UserDto;
 import com.backend.as.glady.model.WalletUserDto;
@@ -24,6 +25,9 @@ public class CompanyService implements ICompanyService {
 	@Inject
 	private UserRepository userRepository;
 
+	@Inject
+	private WalletRepository walletRepository;
+
 	/**
 	 * it is a constructor
 	 */
@@ -34,19 +38,23 @@ public class CompanyService implements ICompanyService {
 	@Override
 	public UserDto distributeGiftOrMealDepositToUser(Long idCompany, Long idUser, WalletUserDto walletUserDto) {
 
-		Optional<User> user = verifyIfUserIsPresent(idUser);
+		Optional<User> userOpt = verifyIfUserIsPresent(idUser);
 
-		verifyIfUserAffiliatedToThisCompany(idCompany, idUser, user);
+		verifyIfUserAffiliatedToThisCompany(idCompany, idUser, userOpt);
 
-		verifyIfAmountCompanyBalanceIsEnoughForOperation(walletUserDto, user);
+		verifyIfAmountCompanyBalanceIsEnoughForOperation(walletUserDto, userOpt);
 
 		// We add the meal or gift deposit and save it to user
 
 		WalletUser walletUser = gladyMapper.walletUserDtoToWalletUser(walletUserDto);
-		
-		user.get().getWalletUser().add(walletUser);
+		// link deposit to user
+		walletUser.setUser(userOpt.get());
 
-		return gladyMapper.userToUserDto(userRepository.save(user.get()));
+		// save the new deposit
+		walletRepository.save(walletUser);
+
+		// Return the user with all meals and gifts deposit
+		return gladyMapper.userToUserDto(userOpt.get());
 	}
 
 	/**
@@ -57,7 +65,7 @@ public class CompanyService implements ICompanyService {
 		// verify if the company balance allows this transaction
 		if (user.isPresent() && user.get().getCompany().getBalance() < walletUserDto.getBalance()) {
 			throw new UnsupportedOperationException(
-					"The mount request" + walletUserDto.getBalance() + " is greater than the total amount of company");
+					"The amount requested: " + walletUserDto.getBalance() + " is greater than the total amount of company");
 		}
 	}
 
@@ -86,7 +94,5 @@ public class CompanyService implements ICompanyService {
 		}
 		return user;
 	}
-
-	
 
 }
