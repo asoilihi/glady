@@ -20,7 +20,7 @@ public class UserController {
 	private UserService userService;
 
 	/**
-	 * Calculate totals balances of user
+	 * Calculate totals balances of user in param
 	 * 
 	 * @param idUser
 	 * @return
