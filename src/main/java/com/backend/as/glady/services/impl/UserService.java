@@ -37,7 +37,7 @@ public class UserService implements IUserService {
 	 * 
 	 */
 	public UserService() {
-		// Nothing to do here
+		// Nothing to do here all right
 	}
 
 	@Override
